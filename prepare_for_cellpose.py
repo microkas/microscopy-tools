@@ -1,3 +1,6 @@
+# 15.09.2025
+# Lukas Nutz
+
 import os
 import re
 import numpy as np
@@ -82,3 +85,4 @@ if __name__ == "__main__":
                 print(f"\rProcessed {completed}/{len(files)} files", end="")
 
     print("\n✅ Finished.")
+
