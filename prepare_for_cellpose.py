@@ -1,6 +1,8 @@
 # 15.09.2025
 # Lukas Nutz
 
+# Filter and scale down images for cellpose segmentation
+
 import os
 import re
 import numpy as np
@@ -22,7 +24,7 @@ target_size = (512, 512)
 def dog_laplace_approx(filename, sigma1=2, sigma2=3):
     match = pattern.search(filename)
     if not match:
-        print(f"⚠️ Skipping unmatched file: {filename}")
+        print(f"Skipping unmatched file: {filename}")
         return None
 
     wl = match.group(3)
@@ -34,14 +36,14 @@ def dog_laplace_approx(filename, sigma1=2, sigma2=3):
     try:
         img = imread(fpath)
     except Exception as e:
-        print(f"❌ Could not read {filename}: {e}")
+        print(f"Could not read {filename}: {e}")
         return None
 
     if img.ndim == 3:
         try:
             img = img[channel_idx]
         except IndexError:
-            print(f"❌ Channel index {channel_idx} out of range for {filename}")
+            print(f"Channel index {channel_idx} out of range for {filename}")
             return None
 
 
@@ -80,9 +82,10 @@ if __name__ == "__main__":
                     else:
                         raise ValueError("Returned None")
                 except Exception as e:
-                    print(f"\n🔁 Failed {fname}: {e}")
+                    print(f"\nFailed {fname}: {e}")
                 completed += 1
                 print(f"\rProcessed {completed}/{len(files)} files", end="")
 
-    print("\n✅ Finished.")
+    print("\nFinished.")
+
 
